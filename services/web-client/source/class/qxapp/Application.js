@@ -14,7 +14,6 @@
  * @asset(qxapp/*)
  */
 
-/* global qxapp */
 /* eslint no-warning-comments: "off" */
 
 qx.Class.define("qxapp.Application", {
@@ -62,12 +61,16 @@ qx.Class.define("qxapp.Application", {
         // if (e.getData() === true) {
         this.__layoutManager = new qxapp.desktop.LayoutManager();
         doc.remove(login);
-        doc.add(this.__layoutManager);
+        doc.add(this.__layoutManager, {
+          left: "0%",
+          top: "0%",
+          height: "100%",
+          width: "100%"
+        });
         // }
       }, this);
 
-      doc.set({
-      });
+      doc.set({});
       doc.add(login, {
         left: "10%",
         top: "10%",
