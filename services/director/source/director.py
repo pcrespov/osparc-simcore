@@ -26,17 +26,17 @@ def hello_world():
     """ Routing to test that the director is online
 
     Returns:
-        [type] -- [description]
+        [string] -- [some smart message]
     """
     return "<h1>Hoi zaeme! Salut les d'jeunz!</h1><h3>This is {} responding!</h2>".format(__name__)
 
 
 @APP.route('/list_interactive_services', methods=['GET'])
 def list_interactive_services():
-    """[summary]
+    """ Returns the list of interactive services available from the registry
 
     Returns:
-        [type] -- [description]
+        [json list] -- [list of available interactive service names]
     """
 
     # get the services repos
@@ -49,17 +49,15 @@ def list_interactive_services():
         if service_name not in list_of_interactive_services:
             list_of_interactive_services.append(service_name)
 
-    #list_of_interactive_services = [registry_proxy.retrieve_list_of_images_in_repo(repo) for repo in list_of_interactive_repos]
-
     return json.dumps(list_of_interactive_services)
 
 
 @APP.route('/start_service', methods=['POST'])
 def start_service():
-    """[summary]
+    """[starts a service given its name and a uuid]
 
     Returns:
-        [type] -- [description]
+        [type] -- [The service name, the service uuid, a list of container meta data [container id, published ports if any]]
     """
     # check syntax
     if not request.json or not 'service_name' in request.json or not 'service_uuid' in request.json:
@@ -85,10 +83,10 @@ def start_service():
 
 @APP.route('/stop_service', methods=['POST'])
 def stop_service():
-    """[summary]
+    """[stops a service given its uuid]
 
     Returns:
-        [type] -- [description]
+        [string] -- ["service stopped" if success]
     """
 
     # check syntax
