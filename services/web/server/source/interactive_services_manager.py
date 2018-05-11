@@ -3,6 +3,7 @@
 """
 # pylint: disable=W0703
 # pylint: disable=C0111
+import json
 import logging
 import director_proxy
 
@@ -27,8 +28,7 @@ def retrieve_list_of_services():
     try:
         return director_proxy.retrieve_interactive_services()
     except Exception as err:
-        # FIXME: shouldn't I return a json??
-        return "Failed retrieving list of services: " + str(err)
+        return json.dumps("Failed retrieving list of services: " + str(err))
 
 
 def start_service(session_id, service_name, service_uuid):
@@ -39,9 +39,8 @@ def start_service(session_id, service_name, service_uuid):
         __RUNNING_SERVICES[session_id].append(service_uuid)
         return result
     except Exception as err:
-        # FIXME: shouldn't I return a json??
         _LOGGER.exception("Failed to start %s", service_name)
-        return "Failed starting service " + service_name + ": " + str(err)
+        return json.dumps("Failed starting service " + service_name + ": " + str(err))
 
 
 def stop_service(session_id, service_uuid):
@@ -50,6 +49,5 @@ def stop_service(session_id, service_uuid):
         __RUNNING_SERVICES[session_id].remove(service_uuid)
         return result
     except Exception as err:
-        # FIXME: shouldn't I return a json??
         _LOGGER.exception("Failed to top %s", service_uuid)
-        return "Failed stopping service " + str(err)
+        return json.dumps("Failed stopping service " + str(err))
