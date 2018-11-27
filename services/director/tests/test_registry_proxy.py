@@ -108,8 +108,6 @@ def test_get_service_last_namess():
 
 
 async def test_get_service_details(push_services, configure_registry_access):
-    import pdb; pdb.set_trace()
-    blahblahblah
     images = push_services(1, 1)
     for image in images:
         service_description = image["service_description"]
