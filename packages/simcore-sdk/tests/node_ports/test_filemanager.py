@@ -7,7 +7,6 @@ import pytest
 from simcore_sdk.node_ports import exceptions, filemanager
 
 
-@pytest.mark.asyncio
 async def test_valid_upload_download(tmpdir, bucket, storage, filemanager_cfg, user_id, file_uuid, s3_simcore_location):
     file_path = Path(tmpdir) / "test.test"
     file_path.write_text("I am a test file")
@@ -23,7 +22,6 @@ async def test_valid_upload_download(tmpdir, bucket, storage, filemanager_cfg, u
 
     assert filecmp.cmp(download_file_path, file_path)
     
-@pytest.mark.asyncio
 async def test_invalid_file_path(tmpdir, bucket, storage, filemanager_cfg, user_id, file_uuid, s3_simcore_location):
     file_path = Path(tmpdir) / "test.test"
     file_path.write_text("I am a test file")
@@ -39,7 +37,6 @@ async def test_invalid_file_path(tmpdir, bucket, storage, filemanager_cfg, user_
     with pytest.raises(exceptions.S3InvalidPathError):
         await filemanager.download_file(store_id=store, s3_object=file_id, local_file_path=download_file_path)
 
-@pytest.mark.asyncio
 async def test_invalid_fileid(tmpdir, bucket, storage, filemanager_cfg, user_id, s3_simcore_location):
     file_path = Path(tmpdir) / "test.test"
     file_path.write_text("I am a test file")
@@ -57,7 +54,6 @@ async def test_invalid_fileid(tmpdir, bucket, storage, filemanager_cfg, user_id,
     with pytest.raises(exceptions.S3InvalidPathError):
         await filemanager.download_file(store_id=store, s3_object="file_id", local_file_path=download_file_path)
     
-@pytest.mark.asyncio
 async def test_invalid_store(tmpdir, bucket, storage, filemanager_cfg, user_id, file_uuid, s3_simcore_location):
     file_path = Path(tmpdir) / "test.test"
     file_path.write_text("I am a test file")
@@ -72,6 +68,5 @@ async def test_invalid_store(tmpdir, bucket, storage, filemanager_cfg, user_id, 
     with pytest.raises(exceptions.S3InvalidStore):
         await filemanager.download_file(store_name=store, s3_object=file_id, local_file_path=download_file_path)
 
-@pytest.mark.asyncio
 async def test_storage_sdk_client(storage):
     pass
