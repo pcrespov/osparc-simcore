@@ -9,8 +9,6 @@
       "type": "object",
       "additionalProperties": true,
       "required": [
-        "key",
-        "version",
         "label",
         "position"
       ],
