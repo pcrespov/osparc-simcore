@@ -11,16 +11,17 @@
       "required": [
         "key",
         "version",
+        "label",
         "position"
       ],
       "properties": {
         "key": {
           "type": "string",
           "description": "distinctive name for the node based on the docker registry path",
-          "pattern": "^(service)/(computational|dynamic)(/[^\\s/]+)+$",
+          "pattern": "^(simcore)/(services)(/demodec)?/(comp|dynamic)(/[^\\s/]+)+$",
           "examples": [
-            "service/computational/sleeper",
-            "service/dynamic/3dviewer"
+            "simcore/services/comp/sleeper",
+            "simcore/services/dynamic/3dviewer"
           ]
         },
         "version": {
@@ -37,7 +38,8 @@
           "description": "values of input properties",
           "patternProperties": {
             "^[-_a-zA-Z0-9]+$": {
-              "oneOf": [{
+              "oneOf": [
+                {
                   "type": [
                     "integer",
                     "boolean",
@@ -71,7 +73,7 @@
                   ],
                   "properties": {
                     "store": {
-                      "type": "string"
+                      "type": ["string", "integer"]
                     },
                     "path": {
                       "type": "string"
@@ -86,7 +88,8 @@
           "type": "object",
           "patternProperties": {
             "^[-_a-zA-Z0-9]+$": {
-              "oneOf": [{
+              "oneOf": [
+                {
                   "type": [
                     "integer",
                     "boolean",
@@ -104,7 +107,7 @@
                   ],
                   "properties": {
                     "store": {
-                      "type": "string"
+                      "type": ["string", "integer"]
                     },
                     "path": {
                       "type": "string"
