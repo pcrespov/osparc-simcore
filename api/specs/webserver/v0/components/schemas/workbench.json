@@ -7,7 +7,7 @@
   "patternProperties": {
     "^\\S+$": {
       "type": "object",
-      "additionalProperties": false,
+      "additionalProperties": true,
       "required": [
         "key",
         "version",
