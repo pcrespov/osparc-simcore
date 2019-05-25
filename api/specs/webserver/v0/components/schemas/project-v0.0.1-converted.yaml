@@ -139,6 +139,10 @@ properties:
             items:
               type: string
               pattern: ^\S+$
+            description: node IDs of where the node is connected to
+            example:
+              - nodeUuid1
+              - nodeUuid2
           outputs:
             type: object
             patternProperties:
