@@ -5,7 +5,7 @@
   "description": "description of a simcore workbench",
   "type": "object",
   "patternProperties": {
-    "^\\S+$": {
+    "^[-_a-zA-Z0-9]+$": {
       "type": "object",
       "additionalProperties": true,
       "required": [

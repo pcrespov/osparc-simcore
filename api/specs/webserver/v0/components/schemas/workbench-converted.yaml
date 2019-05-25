@@ -2,21 +2,20 @@ title: simcore workbench
 description: description of a simcore workbench
 type: object
 x-patternProperties:
-  ^\S+$:
+  '^[-_a-zA-Z0-9]+$':
     type: object
-    additionalProperties: false
+    additionalProperties: true
     required:
-      - key
-      - version
+      - label
       - position
     properties:
       key:
         type: string
         description: distinctive name for the node based on the docker registry path
-        pattern: '^(service)/(computational|dynamic)(/[^\s/]+)+$'
+        pattern: '^(simcore)/(services)(/demodec)?/(comp|dynamic)(/[^\s/]+)+$'
         example:
-          - service/computational/sleeper
-          - service/dynamic/3dviewer
+          - simcore/services/comp/sleeper
+          - simcore/services/dynamic/3dviewer
       version:
         type: string
         description: semantic version number of the node
@@ -54,7 +53,9 @@ x-patternProperties:
                   - path
                 properties:
                   store:
-                    type: string
+                    type:
+                      - string
+                      - integer
                   path:
                     type: string
       outputs:
@@ -75,17 +76,11 @@ x-patternProperties:
                   - path
                 properties:
                   store:
-                    type: string
+                    type:
+                      - string
+                      - integer
                   path:
                     type: string
-      links:
-        type: array
-        items:
-          type: string
-        description: node IDs of where the node is connected to
-        example:
-          - nodeUuid1
-          - nodeUuid2
       position:
         type: object
         additionalProperties: false
