@@ -31,7 +31,6 @@ PROJECTS_PATHS = [
     "services/web/server/tests/data/fake-project.json",
     "services/web/server/tests/integration/computation/workbench_sleeper_payload.json",
     "services/web/server/src/simcore_service_webserver/data/fake-template-projects.isan.json",
-    "services/web/server/src/simcore_service_webserver/data/fake-user-projects.json",
     "services/web/server/src/simcore_service_webserver/data/fake-template-projects.osparc.json",
     "services/web/server/src/simcore_service_webserver/data/fake-template-projects.json",
 ]
@@ -82,17 +81,7 @@ def test_project_against_schema(data_path, project_schema, this_repo_root_dir):
             "uuid": "eiusmod",
             "name": "minim",
             "description": "ad",
-            "notes": "velit fugiat",
             "prjOwner": "ullamco eu voluptate",
-            "collaborators": {
-                "I<h)n6{%g5o": [
-                "write",
-                "read",
-                "read",
-                "write",
-                "write"
-                ]
-            },
             "creationDate": "8715-11-30T9:1:51.388Z",
             "lastChangeDate": "0944-02-31T5:1:7.795Z",
             "thumbnail": "labore incid",
