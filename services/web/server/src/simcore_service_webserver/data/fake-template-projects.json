@@ -407,7 +407,7 @@
         }
       },
       "template-uuid-43ae-9dfc-5b439ffaeed5": {
-        "key": "simcore/services/dynamic/itis/dash-plot",
+        "key": "multi-plot",
         "version": "1.0.0",
         "label": "Multi Plot",
         "inputs": {},

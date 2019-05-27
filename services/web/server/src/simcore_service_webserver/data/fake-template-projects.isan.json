@@ -561,7 +561,7 @@
         }
       },
       "template-uuid-4265-9a51-a1c2212798ae": {
-        "key": "simcore/services/dynamic/itis/dash-plot",
+        "key": "multi-plot",
         "version": "1.0.0",
         "label": "Membrane Potentials",
         "inputs": {},
@@ -581,7 +581,7 @@
         }
       },
       "template-uuid-41a1-808a-5ce21f5eff0f": {
-        "key": "simcore/services/dynamic/itis/dash-plot",
+        "key": "multi-plot",
         "version": "1.0.0",
         "label": "LCC Currents",
         "inputs": {},

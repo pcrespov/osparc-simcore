@@ -9,7 +9,7 @@
     "lastChangeDate": "2018-12-05T21:13:13.360Z",
     "workbench": {
       "template-uuid-4261-b92f-7343aecaab44": {
-        "key": "simcore/services/dynamic/itis/file-picker",
+        "key": "file-picker",
         "version": "0.0.0",
         "label": "File Picker",
         "inputs": {},
