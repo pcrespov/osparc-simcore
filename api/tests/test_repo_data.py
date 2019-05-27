@@ -55,16 +55,6 @@ def project_schema(request, api_specs_dir):
     schema_path = api_specs_dir / "webserver/v0/components/schemas/project-v0.0.1{}".format(suffix)
     return _load_data(schema_path)
 
-
-@pytest.fixture(
-    scope="module",
-    params=SYNCED_VERSIONS_SUFFIX
-)
-def workbench_schema(request, api_specs_dir):
-    suffix = request.param
-    schema_path = api_specs_dir / "webserver/v0/components/schemas/workbench{}".format(suffix)
-    return _load_data(schema_path)
-
 # TESTS --------------------------------------------------
 
 @pytest.mark.parametrize("data_path", PROJECTS_PATHS)
@@ -96,22 +86,3 @@ def test_project_against_schema(data_path, project_schema, this_repo_root_dir):
 
     for project_data in data:
         jsonschema.validate(project_data, project_schema)
-
-
-@pytest.mark.parametrize("data_path", PROJECTS_PATHS)
-def test_workbench_against_schema(data_path, workbench_schema, this_repo_root_dir):
-    """
-        Both project and workbench datasets are tested against workbench schema
-
-        NOTE: failures here normally are due to lack of sync between these to specs:
-        - api/specs/webserver/v0/components/schemas/workbench.json
-        - api/specs/webserver/v0/components/schemas/project-v0.0.1.json
-    """
-    data = _load_data(this_repo_root_dir / data_path)
-
-    assert any(isinstance(data, _type) for _type in [List, Dict])
-    if isinstance(data, Dict):
-        data = [data,]
-
-    for project_data in data:
-        jsonschema.validate(project_data["workbench"], workbench_schema)
