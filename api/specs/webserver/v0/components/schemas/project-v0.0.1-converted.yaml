@@ -57,6 +57,8 @@ properties:
         type: object
         additionalProperties: false
         required:
+          - key
+          - version
           - label
           - position
         properties:
@@ -65,7 +67,6 @@ properties:
           key:
             type: string
             description: distinctive name for the node based on the docker registry path
-            pattern: '^(simcore)/(services)(/demodec)?/(comp|dynamic)(/[^\s/]+)+$'
             example:
               - simcore/services/comp/sleeper
               - simcore/services/dynamic/3dviewer
