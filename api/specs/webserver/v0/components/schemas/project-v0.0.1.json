@@ -78,15 +78,13 @@
             "position"
           ],
           "properties": {
-            "label": {
-              "type": "string"
-            },
             "key": {
               "type": "string",
               "description": "distinctive name for the node based on the docker registry path",
               "examples": [
                 "simcore/services/comp/sleeper",
-                "simcore/services/dynamic/3dviewer"
+                "simcore/services/dynamic/3dviewer",
+                "file-picker"
               ]
             },
             "version": {
@@ -97,6 +95,9 @@
                 "1.0.0",
                 "0.0.1"
               ]
+            },
+            "label": {
+              "type": "string"
             },
             "progress": {
               "type":"number",
