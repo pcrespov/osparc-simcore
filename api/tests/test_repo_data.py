@@ -43,6 +43,7 @@ def _load_data(fpath: Path):
         try:
             data = json.load(fh)
         except json.JSONDecodeError:
+            fh.seek(0)
             data = yaml.load(fh)
     return data
 
