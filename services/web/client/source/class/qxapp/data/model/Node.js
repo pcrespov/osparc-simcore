@@ -42,9 +42,9 @@ qx.Class.define("qxapp.data.model.Node", {
 
   /**
     * @param workbench {qxapp.data.model.Workbench} workbench owning the widget the node
-    * @param key {String} key of the service represented by the node (not needed for Containers)
-    * @param version {String} version of the service represented by the node (not needed for Containers)
-    * @param uuid {String} uuid of the service represented by the node (not needed fpr new Nodes)
+    * @param key {String} key of the service represented by the node
+    * @param version {String} version of the service represented by the node
+    * @param uuid {String} uuid of the service represented by the node (not needed for new Nodes)
   */
   construct: function(workbench, key, version, uuid) {
     this.setWorkbench(workbench);
@@ -58,33 +58,28 @@ qx.Class.define("qxapp.data.model.Node", {
     this.__outputs = {};
 
     this.set({
-      nodeId: uuid || qxapp.utils.Utils.uuidv4()
+      nodeId: uuid || qxapp.utils.Utils.uuidv4(),
+      key,
+      version
     });
 
-    if (key && version) {
-      // not container
-      this.set({
-        key: key,
-        version: version
-      });
-      let store = qxapp.data.Store.getInstance();
-      let metaData = this.__metaData = store.getNodeMetaData(key, version);
-      if (metaData) {
-        if (metaData.name) {
-          this.setLabel(metaData.name);
-        }
-        if (metaData.inputsDefault) {
-          this.__addInputsDefault(metaData.inputsDefault);
-        }
-        if (metaData.inputs) {
-          this.__addInputs(metaData.inputs);
-        }
-        if (metaData.outputs) {
-          this.__addOutputs(metaData.outputs);
-        }
-        if (metaData.dedicatedWidget) {
-          this.setDedicatedWidget(metaData.dedicatedWidget);
-        }
+    let store = qxapp.data.Store.getInstance();
+    let metaData = this.__metaData = store.getNodeMetaData(key, version);
+    if (metaData) {
+      if (metaData.name) {
+        this.setLabel(metaData.name);
+      }
+      if (metaData.inputsDefault) {
+        this.__addInputsDefault(metaData.inputsDefault);
+      }
+      if (metaData.inputs) {
+        this.__addInputs(metaData.inputs);
+      }
+      if (metaData.outputs) {
+        this.__addOutputs(metaData.outputs);
+      }
+      if (metaData.dedicatedWidget) {
+        this.setDedicatedWidget(metaData.dedicatedWidget);
       }
     }
   },
