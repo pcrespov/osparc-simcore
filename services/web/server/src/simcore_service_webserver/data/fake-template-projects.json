@@ -134,7 +134,7 @@
     "workbench": {
       "template-uuid-4997-a192-10b0f519cf12": {
         "key": "file-picker",
-        "version": "0.0.0",
+        "version": "1.0.0",
         "label": "File Picker 0D",
         "inputs": {},
         "inputNodes": [],

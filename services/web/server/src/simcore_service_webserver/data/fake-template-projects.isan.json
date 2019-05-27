@@ -10,7 +10,7 @@
     "workbench": {
       "template-uuid-4674-b758-946151cae351": {
         "key": "file-picker",
-        "version": "0.0.0",
+        "version": "1.0.0",
         "label": "File Picker 0D",
         "inputs": {},
         "inputNodes": [],
@@ -94,7 +94,7 @@
     "workbench": {
       "template-uuid-4212-8108-c7cfab4f241e": {
         "key": "file-picker",
-        "version": "0.0.0",
+        "version": "1.0.0",
         "inputs": {},
         "outputs": {},
         "label": "File Picker 1&2 D",
@@ -108,7 +108,7 @@
       },
       "template-uuid-4ea2-9778-2b2e0e28907a": {
         "key": "nodes-group",
-        "version": "0.0.0",
+        "version": "1.0.0",
         "label": "CC 1D",
         "inputs": {},
         "outputs": {},
@@ -123,7 +123,7 @@
       },
       "template-uuid-41c5-bb23-d55cc2cb0252": {
         "key": "nodes-group",
-        "version": "0.0.0",
+        "version": "1.0.0",
         "label": "CC 2D",
         "inputs": {},
         "outputs": {},
@@ -335,7 +335,7 @@
     "workbench": {
       "template-uuid-4552-ad8d-e4699176f397": {
         "key": "file-picker",
-        "version": "0.0.0",
+        "version": "1.0.0",
         "label": "File Picker",
         "inputs": {},
         "inputNodes": [],

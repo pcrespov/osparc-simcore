@@ -101,7 +101,7 @@ qx.Class.define("qxapp.data.Store", {
     getBuiltInServices: function() {
       const builtInServices = [{
         key: "file-picker",
-        version: "0.0.0",
+        version: "1.0.0",
         type: "dynamic",
         name: "File Picker",
         description: "File Picker",
