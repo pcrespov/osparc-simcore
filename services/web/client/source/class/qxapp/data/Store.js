@@ -100,9 +100,9 @@ qx.Class.define("qxapp.data.Store", {
 
     getBuiltInServices: function() {
       const builtInServices = [{
-        key: "simcore/services/dynamic/itis/file-picker",
+        key: "file-picker",
         version: "0.0.0",
-        type: "computational",
+        type: "dynamic",
         name: "File Picker",
         description: "File Picker",
         authors: [{
@@ -1234,9 +1234,6 @@ qx.Class.define("qxapp.data.Store", {
         "simcore/services/dynamic/cc-2d-viewer": {
           "category": "PostPro"
         },
-        "simcore/services/dynamic/itis/file-picker": {
-          "category": "Data"
-        },
         "simcore/services/dynamic/jupyter-base-notebook": {
           "category": "Notebook"
         },
@@ -1261,7 +1258,10 @@ qx.Class.define("qxapp.data.Store", {
         "simcore/services/dynamic/raw-graphs": {
           "category": "PostPro"
         },
-        "simcore/services/dynamic/itis/dash-plot": {
+        "file-picker": {
+          "category": "Data"
+        },
+        "multi-plot": {
           "category": "PostPro"
         }
       };
