@@ -234,6 +234,13 @@ qx.Class.define("qxapp.data.model.Node", {
       return false;
     },
 
+    isRealService: function() {
+      if (this.isInKey("simcore/service")) {
+        return true;
+      }
+      return false;
+    },
+
     getMetaData: function() {
       return this.__metaData;
     },
@@ -636,7 +643,7 @@ qx.Class.define("qxapp.data.model.Node", {
     },
 
     startInteractiveNode: function() {
-      if (this.isDynamic()) {
+      if (this.isDynamic() && this.isRealService()) {
         let retrieveBtn = new qx.ui.form.Button().set({
           icon: "@FontAwesome5Solid/spinner/32"
         });
