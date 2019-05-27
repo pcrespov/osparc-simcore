@@ -107,6 +107,8 @@
         }
       },
       "template-uuid-4ea2-9778-2b2e0e28907a": {
+        "key": "nodes-group",
+        "version": "0.0.0",
         "label": "CC 1D",
         "inputs": {},
         "outputs": {},
@@ -120,6 +122,8 @@
         }
       },
       "template-uuid-41c5-bb23-d55cc2cb0252": {
+        "key": "nodes-group",
+        "version": "0.0.0",
         "label": "CC 2D",
         "inputs": {},
         "outputs": {},

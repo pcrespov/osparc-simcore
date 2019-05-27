@@ -120,9 +120,20 @@ qx.Class.define("qxapp.data.Store", {
           }
         }
       }, {
-        key: "simcore/services/dynamic/itis/dash-plot",
+        key: "nodes-group",
         version: "1.0.0",
-        type: "container",
+        type: "group",
+        name: "Group of nodes",
+        description: "Groups a collection of nodes in a single node",
+        authors: [{
+          name: "Odei Maiz",
+          email: "maiz@itis.ethz.ch"
+        }],
+        contact: "maiz@itis.ethz.ch"
+      }, {
+        key: "multi-plot",
+        version: "1.0.0",
+        type: "group",
         dedicatedWidget: true,
         name: "2D plot - Multi",
         description: "2D plot - Multi",

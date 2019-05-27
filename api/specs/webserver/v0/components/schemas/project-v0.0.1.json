@@ -72,6 +72,8 @@
           "type": "object",
           "additionalProperties": false,
           "required": [
+            "key",
+            "version",
             "label",
             "position"
           ],

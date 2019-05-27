@@ -506,7 +506,7 @@ qx.Class.define("qxapp.data.model.Node", {
 
     // post edge creation routine
     edgeAdded: function(edge) {
-      if (this.isInKey("dash-plot")) {
+      if (this.isInKey("multi-plot")) {
         const inputNode = this.getWorkbench().getNode(edge.getInputNodeId());
         const innerNodes = Object.values(this.getInnerNodes());
         for (let i=0; i<innerNodes.length; i++) {
@@ -626,14 +626,17 @@ qx.Class.define("qxapp.data.model.Node", {
         if (!qxapp.data.Permissions.getInstance().canDo("study.update")) {
           return;
         }
-        let urlUpdate = this.getServiceUrl() + "/retrieve";
-        urlUpdate = urlUpdate.replace("//retrieve", "/retrieve");
-        let updReq = new qx.io.request.Xhr();
-        updReq.set({
-          url: urlUpdate,
-          method: "GET"
-        });
-        updReq.send();
+        const srvUrl = this.getServiceUrl();
+        if (srvUrl) {
+          let urlUpdate = srvUrl + "/retrieve";
+          urlUpdate = urlUpdate.replace("//retrieve", "/retrieve");
+          let updReq = new qx.io.request.Xhr();
+          updReq.set({
+            url: urlUpdate,
+            method: "GET"
+          });
+          updReq.send();
+        }
       }
     },
 
