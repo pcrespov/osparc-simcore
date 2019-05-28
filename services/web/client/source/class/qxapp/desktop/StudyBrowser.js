@@ -154,7 +154,7 @@ qx.Class.define("qxapp.desktop.StudyBrowser", {
       }
       this.__creatingNewStudy = true;
 
-      let win = new qx.ui.window.Window(this.tr("Create New Study")).set({
+      const win = new qx.ui.window.Window(this.tr("Create New Study")).set({
         layout: new qx.ui.layout.Grow(),
         contentPadding: 0,
         showMinimize: false,
@@ -164,7 +164,7 @@ qx.Class.define("qxapp.desktop.StudyBrowser", {
         autoDestroy: true
       });
 
-      let newStudyDlg = new qxapp.component.widget.NewStudyDlg();
+      const newStudyDlg = new qxapp.component.widget.NewStudyDlg();
       newStudyDlg.addListenerOnce("createStudy", e => {
         const data = e.getData();
         const newStudy = {
