@@ -108,6 +108,7 @@ qx.Class.define("qxapp.data.model.Study", {
 
   statics: {
     createMinimumStudyObject: function() {
+      // TODO: Check if this can be automatically generated from schema
       return {
         uuid: "",
         name: "",
@@ -116,7 +117,7 @@ qx.Class.define("qxapp.data.model.Study", {
         prjOwner: "",
         creationDate: new Date(),
         lastChangeDate: new Date()
-      }
+      };
     }
   },
 
