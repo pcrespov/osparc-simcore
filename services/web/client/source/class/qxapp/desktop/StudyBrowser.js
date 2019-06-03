@@ -194,20 +194,25 @@ qx.Class.define("qxapp.desktop.StudyBrowser", {
     __createStudy: function(minStudyData, templateId) {
       const resources = this.__studyResources.projects;
 
-      resources.addListenerOnce("postSuccess", e => {
-        const studyData = e.getRequest().getResponse().data;
-        this.__startStudy(studyData);
-      }, this);
-
-      resources.addListener("postError", e => {
-        console.error(e);
-      });
-
       if (templateId) {
+        resources.addListenerOnce("postFromTemplateSuccess", e => {
+          const studyData = e.getRequest().getResponse().data;
+          this.__startStudy(studyData);
+        }, this);
+        resources.addListenerOnce("postFromTemplateError", e => {
+          console.error(e);
+        });
         resources.postFromTemplate({
           "template_id": templateId
         }, minStudyData);
       } else {
+        resources.addListenerOnce("postSuccess", e => {
+          const studyData = e.getRequest().getResponse().data;
+          this.__startStudy(studyData);
+        }, this);
+        resources.addListenerOnce("postError", e => {
+          console.error(e);
+        });
         resources.post(null, minStudyData);
       }
     },
