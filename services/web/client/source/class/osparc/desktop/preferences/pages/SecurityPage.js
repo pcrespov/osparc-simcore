@@ -32,15 +32,15 @@ qx.Class.define("osparc.desktop.preferences.pages.SecurityPage", {
     this.base(arguments, title, iconSrc);
 
     this.add(this.__createPasswordSection());
-    this.add(this.__createTokensSection());
+    this.add(this.__createExternalTokensSection());
   },
 
   members: {
-    __tokensList: null,
+    __externalTokensList: null,
 
-    __createTokensSection: function() {
+    __createExternalTokensSection: function() {
       // layout
-      const box = this._createSectionBox(this.tr("Access Tokens"));
+      const box = this._createSectionBox(this.tr("External service Tokens"));
 
       const label = this._createHelpLabel(this.tr(
         "List of API tokens to access external services. Currently, \
@@ -51,7 +51,7 @@ qx.Class.define("osparc.desktop.preferences.pages.SecurityPage", {
       let linkBtn = new osparc.ui.form.LinkButton(this.tr("To DAT-Core"), "https://app.blackfynn.io");
       box.add(linkBtn);
 
-      const tokensList = this.__tokensList = new qx.ui.container.Composite(new qx.ui.layout.VBox(8));
+      const tokensList = this.__externalTokensList = new qx.ui.container.Composite(new qx.ui.layout.VBox(8));
       box.add(tokensList);
       this.__rebuildTokensList();
 
@@ -59,17 +59,17 @@ qx.Class.define("osparc.desktop.preferences.pages.SecurityPage", {
     },
 
     __rebuildTokensList: function() {
-      this.__tokensList.removeAll();
+      this.__externalTokensList.removeAll();
       osparc.data.Resources.get("tokens")
         .then(tokensList => {
           if (tokensList.length) {
             for (let i=0; i<tokensList.length; i++) {
               const tokenForm = this.__createValidTokenForm(tokensList[i]);
-              this.__tokensList.add(tokenForm);
+              this.__externalTokensList.add(tokenForm);
             }
           } else {
             const emptyForm = this.__createEmptyTokenForm();
-            this.__tokensList.add(new qx.ui.form.renderer.Single(emptyForm));
+            this.__externalTokensList.add(new qx.ui.form.renderer.Single(emptyForm));
           }
         })
         .catch(err => console.error(err));
