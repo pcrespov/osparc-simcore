@@ -53,12 +53,12 @@ qx.Class.define("osparc.desktop.preferences.pages.SecurityPage", {
 
       const tokensList = this.__externalTokensList = new qx.ui.container.Composite(new qx.ui.layout.VBox(8));
       box.add(tokensList);
-      this.__rebuildTokensList();
+      this.__rebuildExternalTokensList();
 
       return box;
     },
 
-    __rebuildTokensList: function() {
+    __rebuildExternalTokensList: function() {
       this.__externalTokensList.removeAll();
       osparc.data.Resources.get("tokens")
         .then(tokensList => {
@@ -113,7 +113,7 @@ qx.Class.define("osparc.desktop.preferences.pages.SecurityPage", {
           }
         };
         osparc.data.Resources.fetch("tokens", "post", params)
-          .then(() => this.__rebuildTokensList())
+          .then(() => this.__rebuildExternalTokensList())
           .catch(err => console.error(err));
       }, this);
       form.addButton(addTokenBtn);
@@ -145,24 +145,6 @@ qx.Class.define("osparc.desktop.preferences.pages.SecurityPage", {
         column: 1
       });
 
-      /*
-      const showTokenIcon = "@FontAwesome5Solid/edit/"+iconHeight;
-      const showTokenBtn = new qx.ui.form.Button(null, showTokenIcon);
-      showTokenBtn.addListener("execute", e => {
-        const treeItemRenamer = new osparc.component.widget.Renamer(nameVal.getValue());
-        treeItemRenamer.addListener("labelChanged", ev => {
-          const newLabel = ev.getData()["newLabel"];
-          nameVal.setValue(newLabel);
-        }, this);
-        treeItemRenamer.center();
-        treeItemRenamer.open();
-      }, this);
-      grid.add(showTokenBtn, {
-        row: 0,
-        column: 2
-      });
-      */
-
       const delTokenBtn = new qx.ui.form.Button(null, "@FontAwesome5Solid/trash-alt/"+iconHeight);
       delTokenBtn.addListener("execute", e => {
         if (!osparc.data.Permissions.getInstance().canDo("preferences.token.delete", true)) {
@@ -174,7 +156,7 @@ qx.Class.define("osparc.desktop.preferences.pages.SecurityPage", {
           }
         };
         osparc.data.Resources.fetch("tokens", "delete", params, service)
-          .then(() => this.__rebuildTokensList())
+          .then(() => this.__rebuildExternalTokensList())
           .catch(err => console.error(err));
       }, this);
       grid.add(delTokenBtn, {
