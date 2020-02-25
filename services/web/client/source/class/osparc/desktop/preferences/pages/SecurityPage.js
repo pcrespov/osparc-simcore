@@ -54,19 +54,19 @@ qx.Class.define("osparc.desktop.preferences.pages.SecurityPage", {
       const tokensList = this.__internalTokensList = new qx.ui.container.Composite(new qx.ui.layout.VBox(8));
       box.add(tokensList);
 
-      const requestTokenBtn = new osparc.ui.form.FetchButton(this.tr("Request Token")).set({
+      const requestTokenBtn = this.__requestTokenBtn = new osparc.ui.form.FetchButton(this.tr("Request oSPARC Token")).set({
         allowGrowX: false
       });
       requestTokenBtn.addListener("execute", () => {
         requestTokenBtn.setFetching(true);
-        this.__requestOsparcToken(requestTokenBtn);
+        this.__requestOsparcToken();
       }, this);
       box.add(requestTokenBtn);
 
       return box;
     },
 
-    __requestOsparcToken: function(requestTokenBtn) {
+    __requestOsparcToken: function() {
       if (!osparc.data.Permissions.getInstance().canDo("preferences.token.create", true)) {
         return;
       }
@@ -78,10 +78,17 @@ qx.Class.define("osparc.desktop.preferences.pages.SecurityPage", {
       osparc.data.Resources.fetch("tokens", "post", params)
         .then(data => {
           this.__rebuildTokensList();
+          const caption = this.tr("oSPARC API tokens");
+          const tokensWindow = new osparc.desktop.preferences.TokensWindow(caption, "hello", "world");
+          tokensWindow.center();
+          tokensWindow.open();
           console.log(data);
         })
-        .catch(err => console.error(err))
-        .finally(() => requestTokenBtn.setFetching(false));
+        .catch(err => {
+          osparc.component.message.FlashMessenger.getInstance().logAs(this.tr("Failed creating oSPARC API token"), "ERROR");
+          console.error(err);
+        })
+        .finally(() => this.__requestTokenBtn.setFetching(false));
     },
 
     __createExternalTokensSection: function() {
@@ -108,11 +115,13 @@ qx.Class.define("osparc.desktop.preferences.pages.SecurityPage", {
       this.__externalTokensList.removeAll();
       osparc.data.Resources.get("tokens")
         .then(tokensList => {
+          let osparcToken = false;
           if (tokensList.length) {
             for (let i=0; i<tokensList.length; i++) {
               const tokenForm = this.__createValidTokenForm(tokensList[i]);
               if (tokensList[i].service === "osparc") {
                 this.__internalTokensList.add(tokenForm);
+                osparcToken = true;
               } else {
                 this.__externalTokensList.add(tokenForm);
               }
@@ -121,6 +130,7 @@ qx.Class.define("osparc.desktop.preferences.pages.SecurityPage", {
             const emptyForm = this.__createEmptyTokenForm();
             this.__externalTokensList.add(new qx.ui.form.renderer.Single(emptyForm));
           }
+          this.__requestTokenBtn.setVisibility(osparcToken ? "excluded" : "visible");
         })
         .catch(err => console.error(err));
     },
