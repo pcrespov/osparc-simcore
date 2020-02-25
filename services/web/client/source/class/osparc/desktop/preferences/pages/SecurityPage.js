@@ -33,10 +33,48 @@ qx.Class.define("osparc.desktop.preferences.pages.SecurityPage", {
 
     this.add(this.__createPasswordSection());
     this.add(this.__createExternalTokensSection());
+
+    this.__rebuildTokensList();
   },
 
   members: {
+    __internalTokensList: null,
     __externalTokensList: null,
+
+      box.add(label);
+
+      const tokensList = this.__internalTokensList = new qx.ui.container.Composite(new qx.ui.layout.VBox(8));
+      box.add(tokensList);
+
+      const requestTokenBtn = new osparc.ui.form.FetchButton(this.tr("Request Token")).set({
+        allowGrowX: false
+      });
+      requestTokenBtn.addListener("execute", () => {
+        requestTokenBtn.setFetching(true);
+        this.__requestOsparcToken(requestTokenBtn);
+      }, this);
+      box.add(requestTokenBtn);
+
+      return box;
+    },
+
+    __requestOsparcToken: function(requestTokenBtn) {
+      if (!osparc.data.Permissions.getInstance().canDo("preferences.token.create", true)) {
+        return;
+      }
+      const params = {
+        data: {
+          "service": "osparc"
+        }
+      };
+      osparc.data.Resources.fetch("tokens", "post", params)
+        .then(data => {
+          this.__rebuildTokensList();
+          console.log(data);
+        })
+        .catch(err => console.error(err))
+        .finally(() => requestTokenBtn.setFetching(false));
+    },
 
     __createExternalTokensSection: function() {
       // layout
@@ -53,19 +91,23 @@ qx.Class.define("osparc.desktop.preferences.pages.SecurityPage", {
 
       const tokensList = this.__externalTokensList = new qx.ui.container.Composite(new qx.ui.layout.VBox(8));
       box.add(tokensList);
-      this.__rebuildExternalTokensList();
 
       return box;
     },
 
-    __rebuildExternalTokensList: function() {
+    __rebuildTokensList: function() {
+      this.__internalTokensList.removeAll();
       this.__externalTokensList.removeAll();
       osparc.data.Resources.get("tokens")
         .then(tokensList => {
           if (tokensList.length) {
             for (let i=0; i<tokensList.length; i++) {
               const tokenForm = this.__createValidTokenForm(tokensList[i]);
-              this.__externalTokensList.add(tokenForm);
+              if (tokensList[i].service === "osparc") {
+                this.__internalTokensList.add(tokenForm);
+              } else {
+                this.__externalTokensList.add(tokenForm);
+              }
             }
           } else {
             const emptyForm = this.__createEmptyTokenForm();
@@ -113,7 +155,7 @@ qx.Class.define("osparc.desktop.preferences.pages.SecurityPage", {
           }
         };
         osparc.data.Resources.fetch("tokens", "post", params)
-          .then(() => this.__rebuildExternalTokensList())
+          .then(() => this.__rebuildTokensList())
           .catch(err => console.error(err));
       }, this);
       form.addButton(addTokenBtn);
@@ -156,7 +198,7 @@ qx.Class.define("osparc.desktop.preferences.pages.SecurityPage", {
           }
         };
         osparc.data.Resources.fetch("tokens", "delete", params, service)
-          .then(() => this.__rebuildExternalTokensList())
+          .then(() => this.__rebuildTokensList())
           .catch(err => console.error(err));
       }, this);
       grid.add(delTokenBtn, {
