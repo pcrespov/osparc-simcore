@@ -94,7 +94,7 @@ qx.Class.define("osparc.desktop.preferences.pages.SecurityPage", {
       ));
       box.add(label);
 
-      let linkBtn = new osparc.ui.form.LinkButton(this.tr("To DAT-Core"), "https://app.blackfynn.io");
+      const linkBtn = new osparc.ui.form.LinkButton(this.tr("To DAT-Core"), "https://app.blackfynn.io");
       box.add(linkBtn);
 
       const tokensList = this.__externalTokensList = new qx.ui.container.Composite(new qx.ui.layout.VBox(8));
@@ -126,30 +126,29 @@ qx.Class.define("osparc.desktop.preferences.pages.SecurityPage", {
     },
 
     __createEmptyTokenForm: function() {
-      let form = new qx.ui.form.Form();
+      const form = new qx.ui.form.Form();
 
       // FIXME: for the moment this is fixed since it has to be a unique id
-      let newTokenService = new qx.ui.form.TextField();
+      const newTokenService = new qx.ui.form.TextField();
       newTokenService.set({
         value: "blackfynn-datcore",
         readOnly: true
       });
       form.add(newTokenService, this.tr("Service"));
 
-      // TODO:
-      let newTokenKey = new qx.ui.form.TextField();
+      const newTokenKey = new qx.ui.form.TextField();
       newTokenKey.set({
         placeholder: this.tr("Introduce token key here")
       });
       form.add(newTokenKey, this.tr("Key"));
 
-      let newTokenSecret = new qx.ui.form.TextField();
+      const newTokenSecret = new qx.ui.form.TextField();
       newTokenSecret.set({
         placeholder: this.tr("Introduce token secret here")
       });
       form.add(newTokenSecret, this.tr("Secret"));
 
-      let addTokenBtn = new qx.ui.form.Button(this.tr("Add"));
+      const addTokenBtn = new qx.ui.form.Button(this.tr("Add"));
       addTokenBtn.setWidth(100);
       addTokenBtn.addListener("execute", e => {
         if (!osparc.data.Permissions.getInstance().canDo("preferences.token.create", true)) {
@@ -219,32 +218,32 @@ qx.Class.define("osparc.desktop.preferences.pages.SecurityPage", {
 
     __createPasswordSection: function() {
       // layout
-      let box = this._createSectionBox(this.tr("Password"));
+      const box = this._createSectionBox(this.tr("Password"));
 
-      let currentPassword = new qx.ui.form.PasswordField().set({
+      const currentPassword = new qx.ui.form.PasswordField().set({
         required: true,
         placeholder: this.tr("Your current password")
       });
       box.add(currentPassword);
 
-      let newPassword = new qx.ui.form.PasswordField().set({
+      const newPassword = new qx.ui.form.PasswordField().set({
         required: true,
         placeholder: this.tr("Your new password")
       });
       box.add(newPassword);
 
-      let confirm = new qx.ui.form.PasswordField().set({
+      const confirm = new qx.ui.form.PasswordField().set({
         required: true,
         placeholder: this.tr("Retype your new password")
       });
       box.add(confirm);
 
-      let manager = new qx.ui.form.validation.Manager();
+      const manager = new qx.ui.form.validation.Manager();
       manager.setValidator(function(_itemForms) {
         return osparc.auth.core.Utils.checkSamePasswords(newPassword, confirm);
       });
 
-      let resetBtn = new qx.ui.form.Button("Reset Password").set({
+      const resetBtn = new qx.ui.form.Button("Reset Password").set({
         allowGrowX: false
       });
       box.add(resetBtn);
