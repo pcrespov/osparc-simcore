@@ -32,6 +32,7 @@ qx.Class.define("osparc.desktop.preferences.pages.SecurityPage", {
     this.base(arguments, title, iconSrc);
 
     this.add(this.__createPasswordSection());
+    this.add(this.__createInternalTokensSection());
     this.add(this.__createExternalTokensSection());
 
     this.__rebuildTokensList();
@@ -41,6 +42,13 @@ qx.Class.define("osparc.desktop.preferences.pages.SecurityPage", {
     __internalTokensList: null,
     __externalTokensList: null,
 
+    __createInternalTokensSection: function() {
+      // layout
+      const box = this._createSectionBox(this.tr("oSparc API Tokens"));
+
+      const label = this._createHelpLabel(this.tr(
+        "API tokens to access oSPARC API."
+      ));
       box.add(label);
 
       const tokensList = this.__internalTokensList = new qx.ui.container.Composite(new qx.ui.layout.VBox(8));
