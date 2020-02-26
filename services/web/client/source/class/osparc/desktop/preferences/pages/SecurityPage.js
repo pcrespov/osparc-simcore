@@ -44,7 +44,7 @@ qx.Class.define("osparc.desktop.preferences.pages.SecurityPage", {
 
     __createInternalTokensSection: function() {
       // layout
-      const box = this._createSectionBox(this.tr("oSparc API Tokens"));
+      const box = this._createSectionBox(this.tr("oSPARC API Tokens"));
 
       const label = this._createHelpLabel(this.tr(
         "API tokens to access oSPARC API."
