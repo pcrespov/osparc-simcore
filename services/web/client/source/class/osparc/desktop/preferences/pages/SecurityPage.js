@@ -54,11 +54,10 @@ qx.Class.define("osparc.desktop.preferences.pages.SecurityPage", {
       const tokensList = this.__internalTokensList = new qx.ui.container.Composite(new qx.ui.layout.VBox(8));
       box.add(tokensList);
 
-      const requestTokenBtn = this.__requestTokenBtn = new osparc.ui.form.FetchButton(this.tr("Request oSPARC Token")).set({
+      const requestTokenBtn = this.__requestTokenBtn = new osparc.ui.form.FetchButton(this.tr("Create oSPARC Token")).set({
         allowGrowX: false
       });
       requestTokenBtn.addListener("execute", () => {
-        requestTokenBtn.setFetching(true);
         this.__requestOsparcToken();
       }, this);
       box.add(requestTokenBtn);
@@ -70,25 +69,32 @@ qx.Class.define("osparc.desktop.preferences.pages.SecurityPage", {
       if (!osparc.data.Permissions.getInstance().canDo("preferences.token.create", true)) {
         return;
       }
-      const params = {
-        data: {
-          "service": "osparc"
-        }
-      };
-      osparc.data.Resources.fetch("tokens", "post", params)
-        .then(data => {
-          this.__rebuildTokensList();
-          const caption = this.tr("oSPARC API tokens");
-          const tokensWindow = new osparc.desktop.preferences.TokensWindow(caption, "hello", "world");
-          tokensWindow.center();
-          tokensWindow.open();
-          console.log(data);
-        })
-        .catch(err => {
-          osparc.component.message.FlashMessenger.getInstance().logAs(this.tr("Failed creating oSPARC API token"), "ERROR");
-          console.error(err);
-        })
-        .finally(() => this.__requestTokenBtn.setFetching(false));
+
+      const createAPIKeyWindow = new osparc.desktop.preferences.window.CreateAPIKey("hello", "world");
+      createAPIKeyWindow.addListener("finished", keyLabel => {
+        const params = {
+          data: {
+            "service": "osparc",
+            "keyLabel": keyLabel.getData()
+          }
+        };
+        createAPIKeyWindow.close();
+        this.__requestTokenBtn.setFetching(true);
+        osparc.data.Resources.fetch("tokens", "post", params)
+          .then(data => {
+            this.__rebuildTokensList();
+            const showAPIKeyWindow = new osparc.desktop.preferences.window.ShowAPIKey("hello", "world");
+            showAPIKeyWindow.center();
+            showAPIKeyWindow.open();
+            console.log(data);
+          })
+          .catch(err => {
+            osparc.component.message.FlashMessenger.getInstance().logAs(this.tr("Failed creating oSPARC API token"), "ERROR");
+            console.error(err);
+          })
+          .finally(() => this.__requestTokenBtn.setFetching(false));
+      }, this);
+      createAPIKeyWindow.open();
     },
 
     __createExternalTokensSection: function() {
@@ -115,13 +121,11 @@ qx.Class.define("osparc.desktop.preferences.pages.SecurityPage", {
       this.__externalTokensList.removeAll();
       osparc.data.Resources.get("tokens")
         .then(tokensList => {
-          let osparcToken = false;
           if (tokensList.length) {
             for (let i=0; i<tokensList.length; i++) {
               const tokenForm = this.__createValidTokenForm(tokensList[i]);
               if (tokensList[i].service === "osparc") {
                 this.__internalTokensList.add(tokenForm);
-                osparcToken = true;
               } else {
                 this.__externalTokensList.add(tokenForm);
               }
@@ -130,7 +134,6 @@ qx.Class.define("osparc.desktop.preferences.pages.SecurityPage", {
             const emptyForm = this.__createEmptyTokenForm();
             this.__externalTokensList.add(new qx.ui.form.renderer.Single(emptyForm));
           }
-          this.__requestTokenBtn.setVisibility(osparcToken ? "excluded" : "visible");
         })
         .catch(err => console.error(err));
     },
@@ -181,6 +184,7 @@ qx.Class.define("osparc.desktop.preferences.pages.SecurityPage", {
     },
 
     __createValidTokenForm: function(token) {
+      const label = token["keyLabel"] || token["service"];
       const service = token["service"];
 
       const height = 20;
@@ -192,13 +196,13 @@ qx.Class.define("osparc.desktop.preferences.pages.SecurityPage", {
       gr.setRowHeight(2, height);
       const grid = new qx.ui.container.Composite(gr);
 
-      const nameLabel = new qx.ui.basic.Label(this.tr("Token name"));
+      const nameLabel = new qx.ui.basic.Label(service);
       grid.add(nameLabel, {
         row: 0,
         column: 0
       });
 
-      const nameVal = new qx.ui.basic.Label(service);
+      const nameVal = new qx.ui.basic.Label(label);
       grid.add(nameVal, {
         row: 0,
         column: 1

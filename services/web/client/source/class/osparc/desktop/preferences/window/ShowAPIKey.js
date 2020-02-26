@@ -19,33 +19,19 @@
  *
  */
 
-qx.Class.define("osparc.desktop.preferences.TokensWindow", {
-  extend: qx.ui.window.Window,
+qx.Class.define("osparc.desktop.preferences.window.ShowAPIKey", {
+  extend: osparc.desktop.preferences.window.APIKeyBase,
 
-  construct: function(caption, key, secret) {
-    this.base(arguments, caption);
+  construct: function(key, secret) {
+    const caption = this.tr("oSPARC API Key");
+    const infoText = this.tr("For your protection, store your access keys securely and do not share them. You will not be able to access the key again once this window is closed.");
+    this.base(arguments, caption, infoText);
 
-    this.set({
-      layout: new qx.ui.layout.VBox(5),
-      autoDestroy: true,
-      modal: true,
-      showMaximize: false,
-      showMinimize: false,
-      width: 350
-    });
-
-    this.__populateInfo(key, secret);
+    this.__populateTokens(key, secret);
   },
 
   members: {
-    __populateInfo: function(key, secret) {
-      const introMsg = this.tr("For your protection, store your access keys securely and do not share them. You will not be able to access the key again once this window is closed.");
-      const introLabel = new qx.ui.basic.Label(introMsg).set({
-        padding: 5,
-        rich: true
-      });
-      this._add(introLabel);
-
+    __populateTokens: function(key, secret) {
       const hBox1 = this.__createEntry(this.tr("<b>Key:</b>"), key);
       this._add(hBox1);
 
@@ -62,7 +48,7 @@ qx.Class.define("osparc.desktop.preferences.TokensWindow", {
         }
       });
       hBox3.add(copyAPIKeyBtn, {
-        flex: 1
+        width: "50%"
       });
       const copyAPISecretBtn = new qx.ui.form.Button(this.tr("Copy API Secret"));
       copyAPISecretBtn.addListener("execute", e => {
@@ -71,7 +57,7 @@ qx.Class.define("osparc.desktop.preferences.TokensWindow", {
         }
       });
       hBox3.add(copyAPISecretBtn, {
-        flex: 1
+        width: "50%"
       });
       this._add(hBox3);
     },
