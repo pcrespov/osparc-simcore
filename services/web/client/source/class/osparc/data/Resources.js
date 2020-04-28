@@ -217,8 +217,6 @@ qx.Class.define("osparc.data.Resources", {
        * API-KEYS
        */
       apiKeys: {
-        idField: "apiKeys",
-        useCache: true,
         endpoints: {
           get: {
             method: "GET",
