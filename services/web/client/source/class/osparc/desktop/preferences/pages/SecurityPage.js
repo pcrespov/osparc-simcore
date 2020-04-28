@@ -154,8 +154,7 @@ qx.Class.define("osparc.desktop.preferences.pages.SecurityPage", {
             showAPIKeyWindow.open();
           })
           .catch(err => {
-            osparc.component.message.FlashMessenger.getInstance().logAs(this.tr("Failed creating API token"), "ERROR");
-            console.error(err);
+            osparc.component.message.FlashMessenger.getInstance().logAs(err.message, "ERROR");
           })
           .finally(() => this.__requestAPIKeyBtn.setFetching(false));
       }, this);
