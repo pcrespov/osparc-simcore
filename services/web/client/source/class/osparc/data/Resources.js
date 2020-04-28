@@ -230,7 +230,7 @@ qx.Class.define("osparc.data.Resources", {
           },
           delete: {
             method: "DELETE",
-            url: statics.API + "/auth/api-keys/{apiKeyName}"
+            url: statics.API + "/auth/api-keys"
           }
         }
       },
