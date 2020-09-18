@@ -196,11 +196,21 @@ qx.Class.define("osparc.desktop.MainPage", {
             const msg = this.tr("Study not found");
             throw new Error(msg);
           }
-          const locked = ("locked" in latestStudyData) ? latestStudyData["locked"]["value"] : false;
+
+          let locked = false;
+          // TODO PC: remove this once /projetcs returns the 'state' node in project
+          if ("locked" in latestStudyData) {
+            locked = latestStudyData["locked"]["value"];
+          }
+          if ("state" in latestStudyData && "locked" in latestStudyData["state"]) {
+            locked = latestStudyData["state"]["locked"]["value"];
+          }
+
           if (locked) {
             const msg = this.tr("Study is opened");
             throw new Error(msg);
           }
+          const store = osparc.store.Store.getInstance();
           store.getInaccessibleServices(latestStudyData)
             .then(inaccessibleServices => {
               if (inaccessibleServices.length) {
