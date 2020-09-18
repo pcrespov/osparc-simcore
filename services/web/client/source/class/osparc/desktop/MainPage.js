@@ -185,8 +185,12 @@ qx.Class.define("osparc.desktop.MainPage", {
     __startStudy: function(studyId) {
       this.__showLoadingPage(this.tr("Loading Study"));
 
-      const store = osparc.store.Store.getInstance();
-      store.getStudyWState(studyId, true)
+      const params = {
+        url: {
+          "projectId": studyId
+        }
+      };
+      osparc.data.Resources.getOne("studies", params)
         .then(latestStudyData => {
           if (!latestStudyData) {
             const msg = this.tr("Study not found");
