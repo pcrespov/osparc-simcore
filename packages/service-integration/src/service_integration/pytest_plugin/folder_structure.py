@@ -17,7 +17,7 @@ def project_slug_dir() -> Path:
 
 
 @pytest.fixture(scope="session")
-def project_name(project_slug_dir) -> str:
+def project_name(project_slug_dir: Path) -> str:
     # Override if it does not apply
     return project_slug_dir.name
 
@@ -30,7 +30,7 @@ def src_dir(project_slug_dir: Path) -> Path:
 
 
 @pytest.fixture(scope="session")
-def tests_dir(project_slug_dir) -> Path:
+def tests_dir(project_slug_dir: Path) -> Path:
     _tests_dir = project_slug_dir / "tests"
     assert _tests_dir.exists()
     return _tests_dir
@@ -92,7 +92,7 @@ def get_expected_files(docker_name: str) -> Tuple[str, ...]:
     )
 
 
-def assert_path_in_repo(expected_path: str, project_slug_dir: Path):
+def assert_path_in_repo(expected_path: str, project_slug_dir: Path) -> None:
 
     if ":" in expected_path:
         folder, glob = expected_path.split(":")
