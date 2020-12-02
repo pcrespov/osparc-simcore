@@ -1,18 +1,15 @@
 import stat
 from pathlib import Path
-from typing import Dict
+from typing import Any, Dict
 
 import click
 import yaml
 
 
-def get_input_config(metadata_file: Path) -> Dict:
-    inputs = {}
+def get_input_config(metadata_file: Path) -> Dict[str, Any]:
     with metadata_file.open() as fp:
         metadata = yaml.safe_load(fp)
-        if "inputs" in metadata:
-            inputs = metadata["inputs"]
-    return inputs
+        return metadata["inputs"] if "inputs" in metadata else {}
 
 
 @click.command()
@@ -32,7 +29,7 @@ def get_input_config(metadata_file: Path) -> Dict:
     type=Path,
     required=True,
 )
-def main(metadata_file_path: Path, run_script_file_path: Path):
+def main(metadata_file_path: Path, run_script_file_path: Path) -> None:
     """Creates a sh script that uses jq tool to retrieve variables
     to use in sh from a json file for use in an osparc service.
 

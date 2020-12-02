@@ -30,7 +30,7 @@ UPGRADE_TAGS = ["major", "minor", "patch"]
     required=False,
     default="metadata/metadata.yml",
 )
-def bump_version(target_version, upgrade, metadata_file_path):
+def bump_version(target_version: str, upgrade: str, metadata_file_path: Path) -> None:
     """ Bumps target version in metadata """
 
     # load and validate metadata
@@ -75,7 +75,7 @@ def bump_version(target_version, upgrade, metadata_file_path):
     required=False,
     default="metadata/metadata.yml",
 )
-def get_version(target_version, metadata_file_path):
+def get_version(target_version: str, metadata_file_path: Path) -> None:
     """ Prints to output requested version """
 
     # load and validate metadata

@@ -6,18 +6,18 @@ import click
 import yaml
 
 
-def get_compose_file(compose_file: Path) -> Dict:
+def get_compose_file(compose_file: Path) -> Dict[str, Any]:
     # TODO: auto-generate minimal: catch FileNotFoundError and deduce minimal from model
     with compose_file.open() as filep:
         return yaml.safe_load(filep)
 
 
-def get_metadata_file(metadata_file: Path) -> Dict:
+def get_metadata_file(metadata_file: Path) -> Dict[str, Any]:
     with metadata_file.open() as fp:
         return yaml.safe_load(fp)
 
 
-def stringify_metadata(metadata: Dict) -> Dict[str, str]:
+def stringify_metadata(metadata: Dict[str, Any]) -> Dict[str, str]:
     jsons = {}
     for key, value in metadata.items():
         # TODO: connect this with models
@@ -56,7 +56,7 @@ def update_compose_labels(
     required=False,
     default="metadata/metadata.yml",
 )
-def main(compose_file_path: Path, metadata_file_path: Path):
+def main(compose_file_path: Path, metadata_file_path: Path) -> None:
     """Update a docker-compose file with json files in a path
 
     Usage: python update_compose_labels --c docker-compose.yml -f folder/path

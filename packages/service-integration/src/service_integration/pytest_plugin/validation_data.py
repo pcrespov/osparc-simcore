@@ -1,10 +1,9 @@
 # pylint:disable=unused-variable
 # pylint:disable=unused-argument
 # pylint:disable=redefined-outer-name
-
 import json
 from pathlib import Path
-from typing import Dict, Iterator, Optional
+from typing import Any, Dict, Iterator, Optional
 
 import pytest
 import yaml
@@ -16,7 +15,7 @@ def port_type(request) -> str:
 
 
 @pytest.fixture
-def label_cfg(metadata_file: Path, port_type: str) -> Dict:
+def label_cfg(metadata_file: Path, port_type: str) -> Dict[str, Any]:
     ports_type = f"{port_type}s"
     with metadata_file.open() as fp:
         cfg = yaml.safe_load(fp)
