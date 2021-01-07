@@ -12,7 +12,6 @@ from typing import Dict, List
 import jsonschema
 import pytest
 import yaml
-
 from utils import current_repo_dir
 
 SYNCED_VERSIONS_SUFFIX = [
@@ -68,7 +67,7 @@ def project_schema(request, api_specs_dir):
 @pytest.mark.parametrize("data_path", PROJECTS_PATHS)
 def test_project_against_schema(data_path, project_schema, this_repo_root_dir):
     """
-        Both projects and workbench datasets are tested against the project schema
+    Both projects and workbench datasets are tested against the project schema
     """
     data = _load_data(this_repo_root_dir / data_path)
 
@@ -91,8 +90,8 @@ def test_project_against_schema(data_path, project_schema, this_repo_root_dir):
         }
         data = prj
 
-    assert any(isinstance(data, _type) for _type in [List, Dict])
-    if isinstance(data, Dict):
+    assert any(isinstance(data, _type) for _type in [list, dict])
+    if isinstance(data, dict):
         data = [
             data,
         ]
