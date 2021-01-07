@@ -10,6 +10,7 @@ from random import randint
 from typing import List, Optional
 
 import pytest
+import simcore_service_catalog.api.dependencies.director
 from fastapi import FastAPI
 from models_library.services import (
     ServiceAccessRightsAtDB,
@@ -17,14 +18,12 @@ from models_library.services import (
     ServiceType,
 )
 from pydantic.types import PositiveInt
-from starlette.testclient import TestClient
-from yarl import URL
-
-import simcore_service_catalog.api.dependencies.director
 from simcore_service_catalog.api.routes import services
 from simcore_service_catalog.db.repositories.groups import GroupsRepository
 from simcore_service_catalog.models.domain.group import GroupAtDB, GroupType
 from simcore_service_catalog.models.schemas.services import ServiceOut
+from starlette.testclient import TestClient
+from yarl import URL
 
 core_services = ["postgres"]
 ops_services = ["adminer"]
@@ -157,10 +156,10 @@ async def test_director_mockup(
 @pytest.mark.skip(
     reason="Not ready, depency injection does not work, using monkeypatch. still issue with setting up database"
 )
-def test_list_services(
+async def test_list_services(
     director_mockup, db_mockup, app: FastAPI, client: TestClient, user_id: int
 ):
-    asyncio.sleep(10)
+    await asyncio.sleep(10)
 
     url = URL("/v0/services").with_query(user_id=user_id)
     response = client.get(str(url))
