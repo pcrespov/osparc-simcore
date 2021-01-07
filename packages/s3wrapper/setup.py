@@ -25,7 +25,7 @@ setup(
     version="0.1.0",
     package_dir={"": "src"},
     packages=["s3wrapper"],
-    python_requires=">=3.6",
+    python_requires="~=3.8",
     install_requires=install_requirements,
     tests_require=test_requirements,
     extras_require={"test": test_requirements},
