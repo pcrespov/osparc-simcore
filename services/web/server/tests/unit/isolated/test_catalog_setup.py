@@ -2,11 +2,8 @@
 # pylint:disable=unused-argument
 # pylint:disable=redefined-outer-name
 
-from asyncio import Future
 
 import pytest
-from yarl import URL
-
 from servicelib.application import create_safe_application
 from servicelib.client_session import APP_CLIENT_SESSION_KEY
 from simcore_service_webserver._meta import api_version_prefix
@@ -17,6 +14,7 @@ from simcore_service_webserver.catalog import (
     to_backend_service,
 )
 from simcore_service_webserver.rest import APP_OPENAPI_SPECS_KEY, load_openapi_specs
+from yarl import URL
 
 
 @pytest.fixture
@@ -41,10 +39,7 @@ def mock_api_calls_to_catalog(client, mocker):
             # Mocks aiohttp.ClientResponse
             # https://docs.aiohttp.org/en/stable/client_reference.html#aiohttp.ClientResponse
             resp = mocker.Mock()
-
-            f = Future()
-            f.set_result({})
-            resp.json.return_value = f
+            resp.json.return_value = {}
 
             resp.status = 200
             return resp

@@ -2,12 +2,11 @@
 # pylint:disable=unused-argument
 # pylint:disable=redefined-outer-name
 
-from asyncio import Future
+
 from copy import deepcopy
 
 import pytest
 from aiohttp import web
-
 from pytest_simcore.helpers.utils_assert import assert_status
 from pytest_simcore.helpers.utils_login import LoggedUser
 from simcore_service_webserver.application import (
@@ -62,9 +61,7 @@ def mock_api_client_session(client, mocker):
             # https://docs.aiohttp.org/en/stable/client_reference.html#aiohttp.ClientResponse
             resp = mocker.Mock()
 
-            f = Future()
-            f.set_result({})
-            resp.json.return_value = f
+            resp.json.return_value = {}
 
             resp.status = 200
             return resp

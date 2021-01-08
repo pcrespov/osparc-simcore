@@ -5,7 +5,6 @@
 import json
 import os
 import sys
-from asyncio import Future
 from pathlib import Path
 from urllib.parse import quote
 
@@ -303,8 +302,7 @@ async def test_create_and_delete_folders_from_project(
 
     dsm = client.app[APP_DSM_KEY]
     mock_dsm = mocker.patch.object(dsm, "copy_file_datcore_s3")
-    mock_dsm.return_value = Future()
-    mock_dsm.return_value.set_result("Howdie")
+    mock_dsm.return_value = "Howdie"
 
     # CREATING
     url = (

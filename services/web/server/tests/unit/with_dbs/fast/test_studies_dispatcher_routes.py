@@ -11,11 +11,6 @@ from typing import Tuple
 
 import pytest
 from aiohttp import ClientResponse, ClientSession, web
-from pytest_simcore.helpers.utils_assert import assert_status
-from pytest_simcore.helpers.utils_login import UserRole
-from pytest_simcore.helpers.utils_mock import future_with_result
-from yarl import URL
-
 from models_library.projects_state import (
     Owner,
     ProjectLocked,
@@ -23,8 +18,11 @@ from models_library.projects_state import (
     ProjectState,
     RunningState,
 )
+from pytest_simcore.helpers.utils_assert import assert_status
+from pytest_simcore.helpers.utils_login import UserRole
 from simcore_service_webserver import catalog
 from simcore_service_webserver.log import setup_logging
+from yarl import URL
 
 
 @pytest.fixture
@@ -188,7 +186,7 @@ def mocks_on_projects_api(mocker):
     ).dict(by_alias=True, exclude_unset=True)
     mocker.patch(
         "simcore_service_webserver.projects.projects_api.get_project_state_for_user",
-        return_value=future_with_result(state),
+        return_value=state,
     )
 
 
@@ -253,7 +251,7 @@ async def test_dispatch_viewer_anonymously(
 ):
     mock_client_director_v2_func = mocker.patch(
         "simcore_service_webserver.director_v2.create_or_update_pipeline",
-        return_value=future_with_result(result=None),
+        return_value=None,
     )
 
     redirect_url = (
