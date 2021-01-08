@@ -102,28 +102,3 @@ async def test_add_projects(fake_project, user_id, mocker, mock_db_engine):
     db_engine.acquire.assert_called()
     mock_connection.scalar.assert_called()
     mock_connection.execute.assert_called()
-
-
-# not sure this is useful...
-# async def test_load_projects(user_id, mocker, mock_db_engine):
-#     mock_result_row = mocker.patch("aiopg.sa.result.RowProxy", spec=True)
-
-#     mock_result = mocker.patch("aiopg.sa.result.ResultProxy", spec=True)
-#     mock_result.fetchone.return_value = mock_result_row
-
-#     db_engine, mock_connection = mock_db_engine(mock_result)
-
-#     projects = await ProjectDB.load_user_projects(user_id=user_id, db_engine=db_engine)
-
-#     db_engine.acquire.assert_called()
-#     mock_connection.execute.assert_called()
-#     assert mock_connection.execute.call_count == 2
-
-# async def test_get_project():
-#     pass
-
-# async def test_update_project():
-#     pass
-
-# async def test_delete_project():
-#     pass
