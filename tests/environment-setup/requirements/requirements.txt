@@ -46,6 +46,10 @@ pytest==6.1.2
     #   pytest-aiohttp
     #   pytest-instafail
     #   pytest-sugar
+pyyaml==5.3.1
+    # via
+    #   -c requirements/../../../requirements/constraints.txt
+    #   -r requirements/requirements.in
 termcolor==1.1.0
     # via pytest-sugar
 toml==0.10.2
