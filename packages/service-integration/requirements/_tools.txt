@@ -35,7 +35,7 @@ nodeenv==1.5.0
     # via pre-commit
 pathspec==0.8.1
     # via black
-pip-tools==5.4.0
+pip-tools==5.5.0
     # via -r requirements/../../../requirements/devenv.txt
 pre-commit==2.9.3
     # via -r requirements/../../../requirements/devenv.txt
