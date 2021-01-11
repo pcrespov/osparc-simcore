@@ -6,12 +6,11 @@ from asyncio import CancelledError
 from typing import Dict, List, Optional
 
 from aiohttp import ContentTypeError, web
-from yarl import URL
-
 from servicelib.application_keys import APP_OPENAPI_SPECS_KEY
 from servicelib.application_setup import ModuleCategory, app_module_setup
 from servicelib.rest_responses import wrap_as_envelope
 from servicelib.rest_routing import iter_path_operations
+from yarl import URL
 
 from ._meta import api_version_prefix
 from .catalog_config import assert_valid_config, get_client_session
