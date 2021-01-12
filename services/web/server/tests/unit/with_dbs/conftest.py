@@ -15,7 +15,7 @@ import sys
 import textwrap
 from copy import deepcopy
 from pathlib import Path
-from typing import Callable, Dict, List, Optional
+from typing import Callable, Dict, Iterator, List, Optional
 from uuid import uuid4
 
 import aioredis
@@ -99,7 +99,7 @@ def docker_compose_file(default_app_cfg):
 
 
 @pytest.fixture(scope="function")
-def app_cfg(default_app_cfg, aiohttp_unused_port):
+def app_cfg(default_app_cfg, aiohttp_unused_port) -> Dict:
     """Can be overriden in any test module to configure
     the app accordingly
     """
@@ -157,7 +157,7 @@ def client(loop, aiohttp_client, web_server, mock_orphaned_services) -> TestClie
 
 
 @pytest.fixture
-def qx_client_outdir(tmpdir):
+def qx_client_outdir(tmpdir) -> Path:
     """Emulates qx output at service/web/client after compiling"""
 
     basedir = tmpdir.mkdir("source-output")
@@ -324,11 +324,15 @@ def postgres_service(docker_services, postgres_dsn):
 
 
 @pytest.fixture
-def postgres_db(postgres_dsn: Dict, postgres_service: str) -> sa.engine.Engine:
+def postgres_db(
+    postgres_dsn: Dict, postgres_service: str
+) -> Iterator[sa.engine.Engine]:
+    # Overrides packages/pytest-simcore/src/pytest_simcore/postgres_service.py::postgres_db to reduce scope
     url = postgres_service
 
     # Configures db and initializes tables
-    pg_cli.discover.callback(**postgres_dsn)
+    kwargs = postgres_dsn.copy()
+    pg_cli.discover.callback(**kwargs)
     pg_cli.upgrade.callback("head")
     # Uses syncrounous engine for that
     engine = sa.create_engine(url, isolation_level="AUTOCOMMIT")
@@ -384,7 +388,7 @@ def socketio_url(client) -> Callable:
         SOCKET_IO_PATH = "/socket.io/"
         return str((client_override or client).make_url(SOCKET_IO_PATH))
 
-    yield create_url
+    return create_url
 
 
 @pytest.fixture()
@@ -403,7 +407,7 @@ async def security_cookie_factory(client) -> Callable:
         )
         return cookie
 
-    yield creator
+    return creator
 
 
 @pytest.fixture()
