@@ -55,7 +55,6 @@ six==1.15.0
     # via
     #   -c requirements/_base.txt
     #   -c requirements/_test.txt
-    #   pip-tools
     #   virtualenv
 toml==0.10.2
     # via
