@@ -24,26 +24,12 @@ click==7.1.2
     #   -c requirements/_test.txt
     #   black
     #   pip-tools
-dataclasses==0.8
-    # via
-    #   -c requirements/_base.txt
-    #   black
 distlib==0.3.1
     # via virtualenv
 filelock==3.0.12
     # via virtualenv
 identify==1.5.13
     # via pre-commit
-importlib-metadata==3.4.0
-    # via
-    #   -c requirements/_test.txt
-    #   pre-commit
-    #   virtualenv
-importlib-resources==5.1.0
-    # via
-    #   -c requirements/_base.txt
-    #   pre-commit
-    #   virtualenv
 isort==5.7.0
     # via
     #   -c requirements/_test.txt
@@ -89,9 +75,7 @@ toml==0.10.2
     #   black
     #   pre-commit
 typed-ast==1.4.2
-    # via
-    #   -c requirements/_test.txt
-    #   black
+    # via black
 typing-extensions==3.7.4.3
     # via
     #   -c requirements/_base.txt
@@ -102,12 +86,6 @@ virtualenv==20.4.2
     # via pre-commit
 watchdog[watchmedo]==1.0.2
     # via -r requirements/_tools.in
-zipp==3.4.0
-    # via
-    #   -c requirements/_base.txt
-    #   -c requirements/_test.txt
-    #   importlib-metadata
-    #   importlib-resources
 
 # The following packages are considered to be unsafe in a requirements file:
 # pip
