@@ -44,10 +44,6 @@ click==7.1.2
     #   -r requirements/_test.in
 codecov==2.1.11
     # via -r requirements/_test.in
-contextvars==2.4
-    # via
-    #   -c requirements/_base.txt
-    #   sniffio
 coverage==5.4
     # via
     #   codecov
@@ -235,7 +231,7 @@ toml==0.10.2
     # via
     #   pylint
     #   pytest
-urllib3==1.26.2
+urllib3==1.26.3
     # via
     #   -c requirements/../../../packages/postgres-database/requirements/../../../requirements/constraints.txt
     #   -c requirements/../../../requirements/constraints.txt
