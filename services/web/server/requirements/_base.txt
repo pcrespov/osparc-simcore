@@ -135,7 +135,7 @@ openapi-spec-validator==0.2.9
     # via openapi-core
 pamqp==2.3.0
     # via aiormq
-parfive==1.2.0
+parfive==1.0.2
     # via -r requirements/_base.in
 passlib==1.7.2
     # via -r requirements/_base.in

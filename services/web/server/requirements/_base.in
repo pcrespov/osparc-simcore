@@ -30,6 +30,8 @@ python-socketio
 semantic_version
 aiodebug
 json2html
-parfive
+
+## See note  in simcore_service_webserver/exporter/file_downloader.py
+parfive==1.0.2
 
 pydantic[email]
