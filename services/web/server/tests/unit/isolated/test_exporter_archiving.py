@@ -5,6 +5,7 @@ import sys
 import tempfile
 import uuid
 from pathlib import Path
+from typing import Iterator
 
 import pytest
 from simcore_service_webserver.exporter.archiving import (
@@ -50,7 +51,7 @@ async def monkey_patch_asyncio_subporcess(loop, mocker):
 
 
 @pytest.fixture
-def temp_dir() -> Path:
+def temp_dir() -> Iterator[Path]:
     with tempfile.TemporaryDirectory() as dir_path:
         yield Path(dir_path)
 
@@ -185,9 +186,7 @@ async def test_archive_already_exists(temp_dir, project_uuid):
 
 
 @pytest.mark.parametrize("no_compresion", [True, False])
-async def test_zip_unzip_folder(
-    temp_dir, project_uuid, no_compresion, monkey_patch_asyncio_subporcess
-):
+async def test_zip_unzip_folder(temp_dir, project_uuid, no_compresion):
     tmp_dir_to_compress = temp_dir_to_compress(temp_dir, project_uuid)
     file_in_archive = tmp_dir_to_compress / "random_file.txt"
     data_before_compression = file_in_archive.read_text()
@@ -210,9 +209,7 @@ async def test_zip_unzip_folder(
     assert data_before_compression == data_after_decompression
 
 
-async def test_unzip_found_too_many_project_targets(
-    temp_dir, project_uuid, monkey_patch_asyncio_subporcess
-):
+async def test_unzip_found_too_many_project_targets(temp_dir, project_uuid):
     tmp_dir_to_compress = temp_dir_to_compress_with_too_many_targets(
         temp_dir, project_uuid
     )

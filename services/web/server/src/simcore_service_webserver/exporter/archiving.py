@@ -63,7 +63,7 @@ async def run_in_process_pool(function: Callable, *args: Tuple[Any]) -> Any:
     try:
         with ProcessPoolExecutor(max_workers=1) as pool:
             return await asyncio.get_event_loop().run_in_executor(pool, function, *args)
-    except asyncio.CancelledError:
+    except asyncio.CancelledError:  # pylint: disable=try-except-raise
         # making sure this error gets propagated correctly
         raise
     except Exception as e:

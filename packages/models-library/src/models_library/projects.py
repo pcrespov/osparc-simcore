@@ -78,7 +78,7 @@ class Project(BaseModel):
     )
 
     # Pipeline of nodes (SEE projects_nodes.py)
-    workbench: Workbench = ...
+    workbench: Workbench = Field(..., description="Project's pipeline")
 
     # Project state (SEE projects_state.py)
     state: Optional[ProjectState] = None
