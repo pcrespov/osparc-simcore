@@ -64,7 +64,9 @@ cryptography==3.2.1
 distro==1.5.0
     # via docker-compose
 docker-compose==1.27.4
-    # via pytest-docker
+    # via
+    #   -c requirements/../../../../requirements/constraints.txt
+    #   pytest-docker
 docker[ssh]==4.4.0
     # via
     #   -r requirements/_test.in
