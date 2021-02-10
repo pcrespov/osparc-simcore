@@ -1,11 +1,11 @@
-# pylint:disable=redefined-outer-name,unused-argument
+# pylint:disable=unused-argument
+# pylint:disable=redefined-outer-name
+# pylint:disable=no-name-in-module
 
 import os
 import sys
-import tempfile
 import uuid
 from pathlib import Path
-from typing import Iterator
 
 import pytest
 from simcore_service_webserver.exporter.archiving import (
@@ -51,21 +51,13 @@ async def monkey_patch_asyncio_subporcess(loop, mocker):
 
 
 @pytest.fixture
-def temp_dir() -> Iterator[Path]:
-    with tempfile.TemporaryDirectory() as dir_path:
-        yield Path(dir_path)
+def temp_dir(tmpdir) -> Path:
+    # Casts https://docs.pytest.org/en/stable/tmpdir.html#the-tmpdir-fixture to Path
+    return Path(tmpdir)
 
 
 @pytest.fixture
-def temp_file() -> Path:
-    file_path = Path("/") / f"tmp/{next(tempfile._get_candidate_names())}"
-    file_path.write_text("test_data")
-    yield file_path
-    file_path.unlink()
-
-
-@pytest.fixture
-def project_uuid():
+def project_uuid() -> str:
     return str(uuid.uuid4())
 
 
@@ -97,9 +89,6 @@ def temp_dir_to_compress_with_too_many_targets(temp_dir, project_uuid) -> Path:
     extra_dir.mkdir(parents=True, exist_ok=True)
 
     return nested_dir
-
-
-# end utils
 
 
 def test_validate_osparc_file_name_ok():
