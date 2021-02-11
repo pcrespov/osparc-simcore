@@ -161,39 +161,6 @@ def get_exported_projects() -> List[Path]:
     return [x for x in exporter_dir.glob("*.osparc")]
 
 
-@pytest.fixture
-async def monkey_patch_asyncio_subporcess(mocker):
-    # TODO: The below bug is not allowing me to fully test,
-    # mocking and waiting for an update
-    # https://bugs.python.org/issue35621
-    # this issue was patched in 3.8, no need
-    if sys.version_info.major == 3 and sys.version_info.minor >= 8:
-        raise RuntimeError(
-            "Issue no longer present in this version of python, "
-            "please remote this mock on python >= 3.8"
-        )
-
-    import subprocess
-
-    async def create_subprocess_exec(*command, **extra_params):
-        class MockResponse:
-            def __init__(self, command, **kwargs):
-                self.proc = subprocess.Popen(command, **extra_params)
-
-            async def communicate(self):
-                return self.proc.communicate()
-
-            @property
-            def returncode(self):
-                return self.proc.returncode
-
-        mock_response = MockResponse(command, **extra_params)
-
-        return mock_response
-
-    mocker.patch("asyncio.create_subprocess_exec", side_effect=create_subprocess_exec)
-
-
 @pytest.fixture(scope="session")
 def push_services_to_registry(
     docker_registry: str, node_meta_schema: Dict
@@ -294,7 +261,6 @@ async def test_import_export_import(
     db_engine,
     redis_client,
     export_version,
-    monkey_patch_asyncio_subporcess,
     simcore_services,
     monkey_patch_aiohttp_request_url,
 ):
