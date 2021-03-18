@@ -255,7 +255,6 @@ async def get_service(
     **RESPONSE_MODEL_POLICY,
 )
 async def modify_service(
-    # pylint: disable=too-many-arguments
     user_id: int,
     service_key: constr(regex=KEY_RE),
     service_version: constr(regex=VERSION_RE),
