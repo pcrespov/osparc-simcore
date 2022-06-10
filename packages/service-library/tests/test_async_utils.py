@@ -173,8 +173,8 @@ async def test_context_aware_measure_parallelism(
     result = await asyncio.gather(*functions)
     elapsed = time() - start
 
-    assert elapsed < _compensate_for_slow_systems(sleep_duration)
     assert control_sequence == result
+    assert elapsed < _compensate_for_slow_systems(sleep_duration)
 
 
 async def test_context_aware_measure_serialization(
