@@ -240,28 +240,24 @@ qx.Class.define("osparc.dashboard.CardBase", {
       let defaultThumbnail = "";
       let uuid = null;
       let owner = "";
-      let accessRights = {};
       let defaultHits = null;
       let workbench = null;
       switch (studyData["resourceType"]) {
         case "study":
           uuid = studyData.uuid ? studyData.uuid : uuid;
           owner = studyData.prjOwner ? studyData.prjOwner : owner;
-          accessRights = studyData.accessRights ? studyData.accessRights : accessRights;
           defaultThumbnail = this.self().STUDY_ICON;
           workbench = studyData.workbench ? studyData.workbench : workbench;
           break;
         case "template":
           uuid = studyData.uuid ? studyData.uuid : uuid;
           owner = studyData.prjOwner ? studyData.prjOwner : owner;
-          accessRights = studyData.accessRights ? studyData.accessRights : accessRights;
           defaultThumbnail = this.self().TEMPLATE_ICON;
           workbench = studyData.workbench ? studyData.workbench : workbench;
           break;
         case "service":
           uuid = studyData.key ? studyData.key : uuid;
           owner = studyData.owner ? studyData.owner : owner;
-          accessRights = studyData.access_rights ? studyData.access_rights : accessRights;
           defaultThumbnail = this.self().SERVICE_ICON;
           if (osparc.data.model.Node.isComputational(studyData)) {
             defaultThumbnail = this.self().COMP_SERVICE_ICON;
@@ -279,7 +275,7 @@ qx.Class.define("osparc.dashboard.CardBase", {
         title: studyData.name,
         description: studyData.description,
         owner,
-        accessRights,
+        accessRights: studyData.accessRights ? studyData.accessRights : {},
         lastChangeDate: studyData.lastChangeDate ? new Date(studyData.lastChangeDate) : null,
         icon: studyData.thumbnail || defaultThumbnail,
         state: studyData.state ? studyData.state : {},
