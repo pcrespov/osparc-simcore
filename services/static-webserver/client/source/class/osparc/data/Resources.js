@@ -1159,6 +1159,7 @@ qx.Class.define("osparc.data.Resources", {
           }
           res.dispose();
           if (status == 500) {
+            console.error(message);
             // Show Flash message...
             osparc.FlashMessenger.getInstance().logAs(message, "ERROR");
             // ...and do not propagate message
